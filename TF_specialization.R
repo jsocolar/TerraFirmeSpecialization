@@ -18,6 +18,7 @@ setwd(paste0("/Users/", User, "/Dropbox/Work/TerraFirmeSpecialization/"))
 save(Loreto_ebd, file="Loreto_ebd.Rdata")
 
 ##### Load Loreto observations from eBird and create presence-absence dataframe #####
+"%ni%" <- Negate("%in%")
 User = "Jacob"
 setwd(paste0("/Users/", User, "/Dropbox/Work/TerraFirmeSpecialization/"))
 load("Loreto_ebd.Rdata")
@@ -38,7 +39,19 @@ for(i in 1:nrow(Loreto_ebd)){
 
 Tind <- c("Crypturellus variegatus", "Pharomachrus pavoninus", "Monasa morphoeus", 
           "Capito auratus", "Synallaxis rutilans", "Sclerurus caudacutus", "Myrmoborus myotherinus",
-          "Schisticichla leucostigma", "Formicarius colma", "Myrmothera campanisona", 
+          "Myrmelastes leucostigma", "Formicarius colma", "Myrmothera campanisona", 
           "Liosceles thoracicus", "Schiffornis turdina", "Cnipodectes subbrunneus", 
           "Tunchiornis ochraceiceps")
-Vind <- c("Crypturellus_undulatus", "Opisthocomus_hoatzin", "Nyctiprogne_leucopygia", "Capito_aurovirens")
+Vind <- c("Crypturellus undulatus", "Opisthocomus hoazin", "Nyctiprogne leucopyga", "Capito aurovirens")
+
+Tbirds <- Loreto_pa[ , which(species %in% Tind)]
+Vbirds <- Loreto_pa[ , which(species %in% Vind)]
+
+Tct <- rowSums(Tbirds)
+Vct <- rowSums(Vbirds)
+
+Tlists <- which(Tct > 2 & Vct == 0)
+Vlists <- which(Vct > 1 & Tct == 0)
+
+species[which(colSums(Loreto_pa[Tlists, ]) > 10*colSums(Loreto_pa[Vlists, ]) &
+          colSums(Loreto_pa[Tlists, ]) > 8)]
