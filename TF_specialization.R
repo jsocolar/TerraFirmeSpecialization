@@ -11,13 +11,13 @@ Loreto_ebd <- f_in %>%
   auk_filter(file = f_out) %>%
   read_ebd
 
-User = TingleyLab
+User = "TingleyLab"
 setwd(paste0("/Users/", User, "/Dropbox/Work/TerraFirmeSpecialization/"))
 
 save(Loreto_ebd, file="Loreto_ebd.Rdata")
 
 
-User = Jacob
+User = "Jacob"
 Tind <- c("Crypturellus_variegatus", "Pharomachrus_pavoninus", "Monasa_morphoeus", 
           "Capito_auratus", "Synallaxis_rutilans", "Sclerurus_caudacutus", "Myrmoborus_myotherinus",
           "Schisticichla_leucostigma", "Formicarius_colma", "Myrmothera_campanisona", 
