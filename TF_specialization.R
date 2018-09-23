@@ -42,16 +42,49 @@ Tind <- c("Crypturellus variegatus", "Pharomachrus pavoninus", "Monasa morphoeus
           "Myrmelastes leucostigma", "Formicarius colma", "Myrmothera campanisona", 
           "Liosceles thoracicus", "Schiffornis turdina", "Cnipodectes subbrunneus", 
           "Tunchiornis ochraceiceps")
-Vind <- c("Crypturellus undulatus", "Opisthocomus hoazin", "Nyctiprogne leucopyga", "Capito aurovirens")
+Vind <- c("Crypturellus undulatus", "Buteogallus schistaceus", "Amazona festiva", 
+          "Opisthocomus hoazin", "Bucco tamatia", "Nasica longirostris", "Thamnophilus cryptoleucus",
+          "Nyctiprogne leucopyga", "Capito aurovirens", "Cephalopterus ornatus", "Certhiaxis mustelinus",
+          "Attila cinnamomeus", "Helicolestes hamatus", "Conirostrum bicolor")
+Wind <- c("Crypturellus duidae", "Crypturellus strigulosus", "Notharchus ordii", 
+          "Epinecrophylla leucophthalma", "Percnostola arenarum", "Sciaphylax castanea", "Pithys castaneus",
+          "Lepidocolaptes duidae", "Zimmerius villarejoi", "Hemitriccus minimus", "Platyrinchus saturatus",
+          "Neopipo cinnamomea", "Conopias parvus", "Attila citriniventris", "Xipholena punicea", 
+          "Neopelma chrysocephalum", "Xenopipo atronitens", "Heterocercus aurantiivertex",
+          "Polioptila clementsi", "Tachyphonus phoenicius")
+Rind <- c("Capito auratus", "Eubucco richardsoni", "Ramphastos vitellinus", "Campephilus melanoleucos",
+          "Xiphorhynchus guttatus", "Rhegmatorhina melanosticta", "Tolmomyias poliocephalus", 
+          "Attila spadiceus", "Chiroxiphia pareola", "Tangara schrankii", "Psarocolius decumanus",
+          "Cacicus oseryi", "Cacicus haemorrhous")
+Rind <- c("Eubucco richardsoni", "Campephilus melanoleucos",
+          "Rhegmatorhina melanosticta", "Tolmomyias poliocephalus", 
+          "Attila spadiceus", "Chiroxiphia pareola", "Tangara schrankii", "Psarocolius decumanus",
+          "Cacicus oseryi", "Cacicus haemorrhous")
 
 Tbirds <- Loreto_pa[ , which(species %in% Tind)]
 Vbirds <- Loreto_pa[ , which(species %in% Vind)]
+Wbirds <- Loreto_pa[ , which(species %in% Wind)]
+Rbirds <- Loreto_pa[ , which(species %in% Rind)]
+
 
 Tct <- rowSums(Tbirds)
 Vct <- rowSums(Vbirds)
+Wct <- rowSums(Wbirds)
+Rct <- rowSums(Rbirds)
 
 Tlists <- which(Tct > 2 & Vct == 0)
-Vlists <- which(Vct > 1 & Tct == 0)
+Vlists <- which(Vct > 2 & Tct == 0)
 
-species[which(colSums(Loreto_pa[Tlists, ]) > 10*colSums(Loreto_pa[Vlists, ]) &
+Wlists <- which(Wct > 2 & Vct == 0 & Rct == 0)
+Rlists <- which(Rct > 2 & Vct == 0 & Wct == 0)
+
+tf_special <- species[which(colSums(Loreto_pa[Tlists, ]) > 10*colSums(Loreto_pa[Vlists, ]) &
           colSums(Loreto_pa[Tlists, ]) > 8)]
+
+v_special <- species[which(colSums(Loreto_pa[Vlists, ]) > 10*colSums(Loreto_pa[Tlists, ]) &
+                colSums(Loreto_pa[Vlists, ]) > 8)]
+
+r_special <- species[which(colSums(Loreto_pa[Rlists, ]) > 5*colSums(Loreto_pa[Wlists, ]) &
+                colSums(Loreto_pa[Rlists, ]) > 4)]
+
+r_special[which(r_special %in% tf_special)]
