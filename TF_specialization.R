@@ -22,7 +22,7 @@ library(rgdal)
 
 ##### Load Loreto observations from eBird and create presence-absence dataframe #####
 User = "Jacob"
-setwd(paste0("/Users/", User, "/Dropbox/Work/TerraFirmeSpecialization/"))
+setwd(paste0("/Users/", User, "/Dropbox/Work/ForestSpecialization/"))
 load("Loreto_ebd.Rdata")
 
 Loreto_ebd <- Loreto_ebd[which(Loreto_ebd$approved == T), ]
@@ -37,6 +37,10 @@ for(i in 1:nrow(Loreto_ebd)){
   Loreto_pa[which(events == Loreto_ebd$sampling_event_identifier[i]), 
             which(species == Loreto_ebd$scientific_name[i])] <- 1
 }
+
+stotz_data <- read.csv('Stotz_et_al_ADATA.csv')
+stotz_data$sp <- paste(stotz_data$GENUS, stotz_data$SPECIES, sep=" ")
+
 
 Tind <- c("Crypturellus variegatus", "Pharomachrus pavoninus", "Monasa morphoeus", 
           "Capito auratus", "Synallaxis rutilans", "Sclerurus caudacutus", "Myrmoborus myotherinus",
